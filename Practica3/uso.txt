@@ -1,0 +1,7 @@
+
+Q: salir.
+W: mueve la cabeza hacia la izquierda.
+E: mueve la cabeza hacia la derecha
+R: Empieza a andar
+T: Activar/desactivar andar
+Y: mueve las antenas
