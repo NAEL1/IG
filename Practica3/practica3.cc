@@ -13,12 +13,35 @@
 #include <objetos.h>
 #include <vector>
 #include <string.h>
+#include <unistd.h>
 // Variables Globales:
 
 _andy andy;
 char modo='S';
+int velocidad= 300;
+int anda=1;
+int antena=1;
+int cabeza=1;
 
+// funcion sleep
 
+void dormir(unsigned milliseconds){
+        usleep(milliseconds * 1000); // takes microseconds
+}
+//funcion idle para
+ void  idle(void){
+	//time += 0.05;
+	if(anda%2==0)
+		andy.ang_mano*=-1;
+	if(antena%2==0)
+		andy.ang_antena*=-1;
+	if(cabeza%2==0)
+		andy.ang_cabeza+=15;
+	dormir(velocidad);
+	glutPostRedisplay();
+}
+
+// funcion para dibujar mensaje en pantalla
 void mensaje(char * msg){
 for (int i = 0; i < strlen(msg); i++) {
 	glutBitmapCharacter(GLUT_BITMAP_HELVETICA_10, (int) msg[i]);
@@ -112,6 +135,8 @@ void draw_objects()
 	//cout << "numero de caras: "<< cabeza.caras.size()<<endl;
 	//cabeza.draw_parte('A',165/255.0,200/255.0,56/255.0,0,1,0);
 	andy.draw_andy(modo,165/255.0,200/255.0,56/255.0,0,1,0);
+	// funcion de animacion
+	glutIdleFunc ( idle );
 }
 
 //rgb(165, 200, 56) andy color 
@@ -187,28 +212,25 @@ switch (toupper(Tecla1)) {
 		andy.ang_mano*=-1;
 		break;
 	case 'T':
-		andy.ang_mano +=35;
-		andy.ang_mano %=70;
+		anda+=1;
 		break;
 
 	case 'Y':
-		andy.ang_antena*=-1;
+		antena+=1;
+		break;
+	case 'U':
+		cabeza+=1;
+		break;
+	case 'B':
+		velocidad/=1.1;
+		break;
+
+	case 'N':
+		velocidad*=1.1;
 		break;
 		
-	
-/*
-	case 'X':{
-		if(tam>1){
-		tam--;
-		al--;
-		break;
-		}
-		}
-	case 'Y':{
-		angy-=0.5;
-		break;
-		}
-		*/
+//	case'':
+//		break;
 
 
 }
@@ -284,7 +306,6 @@ int main(int argc, char **argv)
 {
 
 
-
 // se llama a la inicialización de glut
 glutInit(&argc, argv);
 
@@ -323,5 +344,7 @@ initialize();
 
 // inicio del bucle de eventos
 glutMainLoop();
+
+
 return 0;
 }
