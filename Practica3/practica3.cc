@@ -222,11 +222,15 @@ switch (toupper(Tecla1)) {
 		cabeza+=1;
 		break;
 	case 'B':
-		velocidad/=1.1;
+		if(velocidad>15) 
+			velocidad/=1.2;
+		cout<<" velocidad: "<< velocidad << endl;	
 		break;
 
 	case 'N':
-		velocidad*=1.1;
+		if(velocidad<1500) 
+			velocidad*=1.2;
+		cout<<" velocidad: "<< velocidad << endl;
 		break;
 		
 //	case'':
